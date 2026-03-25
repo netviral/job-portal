@@ -20,13 +20,13 @@ const JobBoard = ({ selectedJob }) => {
 
     return (
         <div className="animate-in space-y-16 pb-24">
-            <div className="space-y-12 pb-12 border-b border-border">
-                <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-12">
-                    <div className="space-y-8 flex-1">
-                        <h1 className="text-4xl font-bold text-foreground leading-tight tracking-tighter uppercase">{selectedJob.title}</h1>
+            <div className="space-y-10 pb-10 border-b border-border">
+                <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8">
+                    <div className="space-y-6 flex-1">
+                        <h1 className="text-2xl font-bold text-foreground leading-tight tracking-tighter uppercase">{selectedJob.title}</h1>
                         <div className="flex items-center gap-4">
-                            <div className="h-4 w-4 bg-primary rounded-sm" />
-                            <h2 className="text-xl font-bold text-muted leading-none tracking-tight uppercase tracking-widest">{selectedJob.company}</h2>
+                            <div className="h-3 w-3 bg-primary rounded-sm" />
+                            <h2 className="text-lg font-bold text-muted leading-none tracking-tight uppercase tracking-widest">{selectedJob.company}</h2>
                         </div>
                         <div className="flex flex-wrap gap-12 mt-12 pt-8 border-t border-border">
                             {[
@@ -42,17 +42,17 @@ const JobBoard = ({ selectedJob }) => {
                         </div>
                     </div>
                     <div className="lg:pt-2">
-                        <Button size="sm" className="bg-primary hover:bg-primary-hover text-foreground font-bold h-12 px-10 text-xs uppercase tracking-widest rounded-lg shadow-xl shadow-primary/20 transition-all w-full lg:w-auto">
+                        <Button size="sm" className="bg-primary hover:bg-primary-hover text-foreground font-bold h-10 px-8 text-xs uppercase tracking-widest rounded-lg shadow-xl shadow-primary/20 transition-all w-full lg:w-auto">
                             Submit Application
                         </Button>
                     </div>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-16">
-                <section className="space-y-8 max-w-3xl">
+            <div className="grid grid-cols-1 gap-12">
+                <section className="space-y-6 max-w-3xl">
                     <h3 className="text-label text-foreground border-l border-primary pl-4 py-0.5 leading-none">Role Overview</h3>
-                    <p className="text-md text-muted leading-relaxed font-medium tracking-tight uppercase opacity-80">{selectedJob.description}</p>
+                    <p className="text-sm text-muted leading-relaxed font-medium tracking-tight uppercase opacity-80">{selectedJob.description}</p>
                 </section>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16">

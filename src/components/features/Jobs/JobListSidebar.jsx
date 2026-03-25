@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Filter, Briefcase } from 'lucide-react';
 import { cn } from "@/lib/utils";
-import { JOB_POSTINGS } from '../../../data';
 
 const JobListSidebar = ({ selectedJob, onSelectJob }) => {
+    const [jobs, setJobs] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [activeFilter, setActiveFilter] = useState('All');
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetch('/jobs.json')
+            .then(res => res.json())
+            .then(data => {
+                setJobs(data);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error("Failed to fetch jobs:", err);
+                setLoading(false);
+            });
+    }, []);
 
     const filters = ['All', 'Full-time', 'Internship'];
 
-    const filteredJobs = JOB_POSTINGS.filter(job => {
+    const filteredJobs = jobs.filter(job => {
         const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
             job.company.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesFilter = activeFilter === 'All' || job.type === activeFilter;
@@ -48,7 +62,12 @@ const JobListSidebar = ({ selectedJob, onSelectJob }) => {
             </div>
 
             <div className="flex-1 overflow-y-auto p-3 flex flex-col gap-1 mt-2">
-                {filteredJobs.length > 0 ? (
+                {loading ? (
+                    <div className="p-8 text-center space-y-3">
+                        <div className="h-4 w-4 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto opacity-40" />
+                        <p className="text-label">Syncing directory...</p>
+                    </div>
+                ) : filteredJobs.length > 0 ? (
                     filteredJobs.map(job => (
                         <button
                             key={job.id}

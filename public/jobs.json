@@ -1,0 +1,75 @@
+[
+    {
+        "id": "J-001",
+        "title": "Software Development Engineer (Campus)",
+        "company": "Goldman Sachs",
+        "location": "Bangalore / Remote",
+        "type": "Full-Time",
+        "salary": "₹24,00,000 - ₹32,00,000",
+        "description": "Join the Global Technology division at Goldman Sachs to build high-performance systems for global financial markets. We are looking for exceptional problem solvers from the Class of 2025.",
+        "responsibilities": [
+            "Design and develop scalable microservices in Java/Python",
+            "Collaborate with global teams to solve low-latency trading challenges",
+            "Write clean, unit-tested, and maintainable production-grade code"
+        ],
+        "requirements": [
+            "Currently pursuing B.Tech/M.Tech in CS or related fields",
+            "Strong understanding of Data Structures and Algorithms",
+            "Proficient in at least one object-oriented language"
+        ],
+        "benefits": [
+            "Performance Bonus",
+            "Medical Insurance",
+            "Relocation Support",
+            "Learning Stipend"
+        ]
+    },
+    {
+        "id": "J-002",
+        "title": "Product Management Intern",
+        "company": "Razorpay",
+        "location": "Bangalore",
+        "type": "Internship (6 Months)",
+        "salary": "₹80,000 / Month",
+        "description": "Razorpay is looking for PM interns who can own features from ideation to launch. Work closely with design and engineering teams to build the future of payments in India.",
+        "responsibilities": [
+            "Conduct market research and user interviews to define product roadmap",
+            "Create detailed PRDs and wireframes for new payment modules",
+            "Analyze product metrics to drive growth and user retention"
+        ],
+        "requirements": [
+            "Pre-final year student from Tier-1 institutions",
+            "Strong first-principles thinking and analytical skills",
+            "Basic understanding of SQL and product analytics tools"
+        ],
+        "benefits": [
+            "Full PPO Potential",
+            "Free Meals",
+            "Casual Work Environment"
+        ]
+    },
+    {
+        "id": "J-003",
+        "title": "Associate Cloud Engineer",
+        "company": "Amazon Web Services",
+        "location": "Hyderabad",
+        "type": "Full-Time",
+        "salary": "₹18,00,000 - ₹22,00,000",
+        "description": "Help global customers build scalable infra on AWS. This is a technical role involving deep dive into cloud services, networking, and serverless compute.",
+        "responsibilities": [
+            "Architect cloud solutions for Fortune 500 clients",
+            "Automate infrastructure deployments using CloudFormation",
+            "Troubleshoot complex networking and security issues"
+        ],
+        "requirements": [
+            "Degree in CS/IT or equivalent (Class of 2024/2025)",
+            "AWS Cloud Practitioner or Solutions Architect Associate is a plus",
+            "Good communication skills for client interactions"
+        ],
+        "benefits": [
+            "AWS Certifications",
+            "RSUs",
+            "Global Exposure"
+        ]
+    }
+]

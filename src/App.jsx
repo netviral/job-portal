@@ -28,7 +28,7 @@ function App() {
   const { theme, toggleTheme } = useTheme();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [activeSubTab, setActiveSubTab] = useState(null);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(window.innerWidth < 1024);
   const [profileData, setProfileData] = useState(USER_PROFILE);
   const [selectedJob, setSelectedJob] = useState(null);
 
@@ -105,7 +105,8 @@ function App() {
         className={cn(
           "flex flex-col border-r border-border bg-[var(--panel-primary)] transition-all duration-300 ease-in-out z-50",
           isSidebarCollapsed ? "w-16" : "w-64",
-          isMobile && !isSidebarCollapsed ? "fixed inset-0 z-[60] shadow-2xl" : ""
+          isMobile && !isSidebarCollapsed ? "fixed left-0 top-0 bottom-0 z-[60] shadow-2xl" : "",
+          isMobile && isSidebarCollapsed ? "-translate-x-full absolute invisible" : "translate-x-0 relative visible"
         )}
       >
         <div className="h-16 flex items-center px-6 mb-2">
@@ -127,6 +128,26 @@ function App() {
           <NavButton icon={<User size={18} />} label="Student Profile" active={activeTab === 'profile'} collapsed={isSidebarCollapsed} onClick={() => handleTabChange('profile')} />
           <NavButton icon={<JobIcon size={18} />} label="Job Board" active={activeTab === 'jobs'} collapsed={isSidebarCollapsed} onClick={() => handleTabChange('jobs')} />
           <NavButton icon={<Bell size={18} />} label="My Applications" active={activeTab === 'notifications'} collapsed={isSidebarCollapsed} onClick={() => handleTabChange('notifications')} />
+
+          <div className="mt-8 px-3">
+            {!isSidebarCollapsed && <h3 className="text-label text-muted-fg px-3 mb-4 uppercase tracking-widest font-bold">Document Hub</h3>}
+            <div className="flex flex-col gap-0.5">
+              <NavButton
+                icon={<span>📄</span>}
+                label="Master Resume"
+                active={activeTab === 'resume-1'}
+                collapsed={isSidebarCollapsed}
+                onClick={() => handleTabChange('resume-1')}
+              />
+              <NavButton
+                icon={<span>📋</span>}
+                label="Product Resume"
+                active={activeTab === 'resume-2'}
+                collapsed={isSidebarCollapsed}
+                onClick={() => handleTabChange('resume-2')}
+              />
+            </div>
+          </div>
         </nav>
 
         <div className="p-3 mb-4 flex flex-col gap-0.5 border-t border-border pt-4">
@@ -140,12 +161,13 @@ function App() {
 
       {/* Persistent Channel Sidebar */}
       <aside
-        style={{ width: hasSecondarySidebar ? (isMobile ? '100%' : `${sidebarWidth}px`) : '0px' }}
+        style={{ width: hasSecondarySidebar ? (isMobile ? '80%' : `${sidebarWidth}px`) : '0px' }}
         className={cn(
           "border-r border-border bg-[var(--panel-secondary)] transition-all duration-300 ease-out overflow-hidden flex flex-col flex-shrink-0 relative group shrink-0",
           !hasSecondarySidebar && "border-none",
           isDetailView && "sidebar-recede",
-          isMobile && hasSecondarySidebar ? "fixed inset-0 z-[55] bg-[var(--panel-secondary)]" : ""
+          isMobile && hasSecondarySidebar ? "fixed left-0 top-0 bottom-0 z-[55] bg-[var(--panel-secondary)] shadow-2xl" : "",
+          isMobile && (!hasSecondarySidebar || isSidebarCollapsed) ? "-translate-x-full absolute invisible" : "translate-x-0 relative visible"
         )}
       >
         <div className="flex flex-col h-full w-full">
@@ -199,8 +221,20 @@ function App() {
         <header className="h-16 flex items-center justify-between px-6 lg:px-10 border-b border-border bg-[var(--panel-main)]/90 backdrop-blur-xl z-20 sticky top-0 shrink-0">
           <div className="flex items-center gap-4 text-sm font-semibold text-muted">
             {isMobile && (
-              <button onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)} className="p-2 hover:bg-card-hover rounded-lg">
-                <ChevronRight size={20} className={cn("transition-transform", !isSidebarCollapsed ? "rotate-180" : "")} />
+              <button
+                onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                className="p-2 -ml-2 hover:bg-card-hover rounded-lg text-foreground transition-colors"
+                aria-label="Toggle Navigation"
+              >
+                {isSidebarCollapsed ? (
+                  <div className="flex flex-col gap-1.5 w-5">
+                    <div className="h-0.5 w-full bg-current rounded-full" />
+                    <div className="h-0.5 w-3/4 bg-current rounded-full" />
+                    <div className="h-0.5 w-full bg-current rounded-full" />
+                  </div>
+                ) : (
+                  <ChevronRight size={20} className="rotate-180" />
+                )}
               </button>
             )}
             <span className="hover:text-foreground transition-colors cursor-pointer capitalize">{activeTab}</span>
@@ -223,8 +257,8 @@ function App() {
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-12 lg:p-20 bg-[var(--panel-main)]">
-          <div className="max-w-4xl mx-auto space-y-20">
+        <div className="flex-1 overflow-y-auto p-6 md:p-12 lg:p-20 bg-[var(--panel-main)]">
+          <div className="max-w-4xl mx-auto space-y-12 lg:space-y-20">
             <RenderPlatformContent
               tab={activeTab}
               subTab={activeSubTab}
@@ -249,6 +283,15 @@ const RenderPlatformContent = ({ tab, subTab, profileData, setProfileData, selec
       return <JobBoard selectedJob={selectedJob} />;
     case 'notifications':
       return <ApplicationsLog />;
+    case 'resume-1':
+    case 'resume-2':
+      return (
+        <div className="h-[60vh] flex flex-col items-center justify-center border-2 border-dashed border-border rounded-3xl opacity-60">
+          <span className="text-4xl mb-4">📄</span>
+          <h3 className="text-xl font-bold text-foreground">Loading Resume Content...</h3>
+          <p className="text-label mt-2">Connecting to document storage services.</p>
+        </div>
+      );
     default:
       return <Dashboard />;
   }
